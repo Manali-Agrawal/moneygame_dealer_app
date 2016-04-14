@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/abc_action_bar_content_inset_material">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/textColor"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="4">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/textColor"
+                android:text="Trans. No."
+                android:singleLine="true"
+                android:gravity="center"/>
+            <View
+                android:layout_width="0.01dp"
+                android:layout_height="match_parent"
+                android:background="@color/textColor"/>
+
+
+            <TextView
+                android:textColor="@color/textColor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Draw Time"
+                android:gravity="center"/>
+
+            <View
+                android:layout_width="0.01dp"
+                android:layout_height="match_parent"
+                android:background="@color/textColor"/>
+
+            <TextView
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Trans. Time"
+                android:textColor="@color/textColor"
+                android:gravity="center"/>
+
+            <View
+                android:layout_width="0.01dp"
+                android:layout_height="match_parent"
+                android:background="@color/textColor"/>
+
+            <TextView
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Result"
+                android:textColor="@color/textColor"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/textColor"/>
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="4">
+        <TextView
+            android:id="@+id/trans_id"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Digit"
+            android:textColor="@color/textColor"
+            android:gravity="center"/>
+
+            <View
+                android:layout_width="0.01dp"
+                android:layout_height="match_parent"
+                android:background="@color/textColor"/>
+
+        <TextView
+            android:id="@+id/draw_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Chip"
+            android:textColor="@color/textColor"
+            android:gravity="center"/>
+
+            <View
+                android:layout_width="0.01dp"
+                android:layout_height="match_parent"
+                android:background="@color/textColor"/>
+
+        <TextView
+            android:id="@+id/trans_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Digit"
+            android:textColor="@color/textColor"
+            android:gravity="center"/>
+
+            <View
+                android:layout_width="0.01dp"
+                android:layout_height="match_parent"
+                android:background="@color/textColor"/>
+
+        <TextView
+            android:id="@+id/result"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Chip"
+            android:textColor="@color/textColor"
+            android:gravity="center"/>
+
+    </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/textColor"/>
+
+        <TextView
+            android:id="@+id/betText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:gravity="center"
+            android:textColor="@color/textColor"
+            android:layout_marginTop="@dimen/abc_action_bar_content_inset_material"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/abc_action_bar_content_inset_material"
+        >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/textColor"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/textColor"
+                android:text="Digit"
+                android:gravity="center"/>
+
+            <View
+                android:layout_width="0.01dp"
+                android:layout_height="match_parent"
+                android:background="@color/textColor"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Chips"
+                android:textColor="@color/textColor"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/textColor"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal">
+
+            <ListView
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"></ListView>
+            <!--<TextView
+                android:id="@+id/digit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:textColor="@color/textColor"
+                android:gravity="center"/>
+            <View
+                android:layout_width="0.01dp"
+                android:layout_height="match_parent"
+                android:background="@color/textColor"/>
+
+            <TextView
+                android:id="@+id/chip"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:textColor="@color/textColor"
+                android:gravity="center"/>-->
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/textColor"/>
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/abc_action_bar_content_inset_material">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:gravity="right"
+                android:text="Total"
+                android:textColor="@color/textColor"
+                android:paddingTop="5dp"/>
+
+
+            <TextView
+                android:id="@+id/total"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:gravity="center"
+                android:textColor="@color/textColor"
+                android:paddingTop="5dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="4"
+            android:orientation="horizontal"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="@dimen/abc_action_bar_content_inset_material">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:gravity="center"
+                android:text="Win"
+                android:paddingTop="5dp"
+                android:textColor="@color/textColor"
+                />
+
+
+            <TextView
+                android:id="@+id/win"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:paddingTop="5dp"
+                android:gravity="center"
+                android:background="#9CCC65"
+                android:textColor="@color/textColor"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:gravity="center"
+                android:text="loss"
+                android:paddingTop="5dp"
+                android:textColor="@color/textColor"/>
+
+
+            <TextView
+                android:id="@+id/loss"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:paddingTop="5dp"
+                android:gravity="center"
+                android:textColor="@color/textColor"
+                android:background="#EF9A9A"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="close"
+        android:layout_below="@+id/holder"
+        android:layout_centerInParent="true"/>
+</RelativeLayout>

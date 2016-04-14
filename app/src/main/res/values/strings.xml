@@ -10,6 +10,23 @@
 
     <!--login api-->
     <string name="login">http://46.101.6.171/moneygame/api/players/login</string>
+    <string name="cricket_account">http://46.101.6.171/moneygame/api/cricket/accountsPlayerByWeek?player_id=</string>
+    <string name="cricket_daily">http://46.101.6.171/moneygame/api/cricket/accountsPlayerByDate?player_id=</string>
+    <string name="match_wise">http://46.101.6.171/moneygame/api/cricket/accountsPlayerBymatch?player_id=</string>
+    <string name="cricket_transaction_details">http://46.101.6.171/moneygame/api/cricket/accountsPlayerByTransactionId?transaction_id=</string>
+
+    <string name="get_today_history">http://46.101.6.171/moneygame/api/players/playerhistory?player_id=</string>
+
+    <string name="get_history_by_week">http://46.101.6.171/moneygame/api/players/accountsPlayerByWeek?player_id=</string>
+
+    <!--get account detail by date-->
+    <string name="get_acc_by_date">http://46.101.6.171/moneygame/api/players/accountsPlayerByDate?player_id=</string>
+
+    <!--get transaction -->
+    <string name="get_transaction">http://46.101.6.171/moneygame/api/players/accountsPlayerByDrawTime?player_id=</string>
+    <!--get specific transaction-->
+    <string name="get_specific_transaction">http://46.101.6.171/moneygame/api/players/accountsPlayerByTransactionId?transaction_id=</string>
+
     <string name="title_activity_home">Home</string>
     <string name="title_activity_week_list">WeekList</string>
 

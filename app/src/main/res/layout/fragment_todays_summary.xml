@@ -1,0 +1,132 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#dedede"
+    android:orientation="vertical"
+    android:weightSum="2"
+    tools:context="bidding.example.com.bidding.TodaysSummary">
+
+    <LinearLayout
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        >
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/textColor"
+            android:paddingLeft="5dp"
+            android:text="Time"/>
+
+
+        <TextView
+            android:id="@+id/transactionNo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:layout_weight="1"
+            android:textColor="@color/textColor"
+            android:paddingLeft="5dp"
+            android:text="Trans. Amount"
+            android:visibility="gone"/>
+
+
+        <TextView
+            android:id="@+id/transactionAmt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:layout_weight="1"
+            android:textColor="@color/textColor"
+            android:paddingLeft="5dp"
+            android:gravity="center"
+            android:text="Trans. Chips"/>
+
+
+        <TextView
+            android:id="@+id/result"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:layout_weight="1"
+            android:textColor="@color/textColor"
+            android:gravity="center"
+            android:text="Win"/>
+    </LinearLayout>
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="0.01dp"
+        android:background="@color/textColor"
+        android:layout_below="@+id/top"/>
+    <ListView
+        android:id="@+id/today_summary"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.8"
+        android:layout_below="@+id/view"
+        android:layout_alignParentBottom="true" />
+
+    <LinearLayout
+        android:id="@+id/bootom"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        >
+        <TextView
+            android:id="@+id/total"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/textColor"
+            android:paddingLeft="5dp"
+            android:text="Total"/>
+
+
+        <TextView
+            android:id="@+id/ttlTransaction"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:layout_weight="1"
+            android:textColor="@color/textColor"
+            android:paddingLeft="5dp"
+            android:text=""
+            android:visibility="gone"/>
+
+
+        <TextView
+            android:id="@+id/ttlAmnt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:layout_weight="1"
+            android:textColor="@color/textColor"
+            android:paddingLeft="5dp"
+            android:gravity="center"
+            android:text=""/>
+
+
+        <TextView
+            android:id="@+id/ttlReslt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:layout_weight="1"
+            android:textColor="@color/textColor"
+            android:gravity="center"
+            android:text=""/>
+    </LinearLayout>
+</LinearLayout>

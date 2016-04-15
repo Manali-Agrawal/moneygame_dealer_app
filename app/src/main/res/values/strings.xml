@@ -34,5 +34,6 @@
 
     <string name="title_activity_home">Home</string>
     <string name="title_activity_week_list">WeekList</string>
+    <string name="title_activity_tab_container">TabContainer</string>
 
 </resources>

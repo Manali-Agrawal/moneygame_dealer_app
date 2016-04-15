@@ -1,5 +1,6 @@
 package com.example.dealerapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -28,7 +29,18 @@ public class Home extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    if(position==0){
+                        startActivity(new Intent(getApplicationContext(), TabContainer.class).putExtra("url",getString(R.string.url_players_lottery)));
 
+                    }
+                if(position==1){
+                    startActivity(new Intent(getApplicationContext(), TabContainer.class).putExtra("url",getString(R.string.url_players_cricket)));
+
+                }
+                if(position==2){
+                    startActivity(new Intent(getApplicationContext(), TabContainer.class).putExtra("url",getString(R.string.url_players_lottery)));
+
+                }
             }
         });
 

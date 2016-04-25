@@ -28,7 +28,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class WeekList extends Activity {
+/**
+ * Created by root on 4/25/16.
+ */
+public class LastWeekList extends Activity {
 
     ListView list;
     String url, dealer_id, user_code, week;
@@ -53,7 +56,11 @@ public class WeekList extends Activity {
         int sunday=calendar.get(Calendar.DAY_OF_WEEK);
         String[] days = new String[7];
         if (sunday==Calendar.SUNDAY){
-            calendar.add(Calendar.DAY_OF_MONTH,-6);
+            calendar.add(Calendar.WEEK_OF_MONTH,-2);
+            calendar.add(Calendar.DAY_OF_MONTH,1);
+        }
+        else{
+            calendar.add(Calendar.WEEK_OF_MONTH, -1);
         }
         for (int i = 0; i < 7; i++)
         {
@@ -69,13 +76,12 @@ public class WeekList extends Activity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if(Home.flag==0) {
                     WeekListGetSet item = weeklist.get(i);
-                    startActivity(new Intent(WeekList.this, CricketAccounts.class).putExtra("player_id", item.getPlayer_nm()));
+                    startActivity(new Intent(LastWeekList.this, CricketAccounts.class).putExtra("player_id", item.getPlayer_nm()));
                 }
                 else if(Home.flag==1){
                     WeekListGetSet item = weeklist.get(i);
-                    startActivity(new Intent(WeekList.this, TodaysHistory.class).putExtra("player_id", item.getPlayer_nm()));
-                };
-
+                    startActivity(new Intent(LastWeekList.this, TodaysHistory.class).putExtra("player_id", item.getPlayer_nm()));
+                }
             }
         });
 
@@ -88,7 +94,7 @@ public class WeekList extends Activity {
             String tag_string_req = "string_req";
 
             Log.i("url", url);
-            final ProgressDialog pDialog = new ProgressDialog(WeekList.this);
+            final ProgressDialog pDialog = new ProgressDialog(LastWeekList.this);
             pDialog.setMessage("Loading...");
             pDialog.show();
             final String TAG = "login";
@@ -179,3 +185,4 @@ public class WeekList extends Activity {
 
 
 }
+

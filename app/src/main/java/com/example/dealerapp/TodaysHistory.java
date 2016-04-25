@@ -5,10 +5,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -35,10 +34,11 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TodaysHistory extends Fragment {
+public class TodaysHistory extends AppCompatActivity {
 
     ListView listView;
     TextView total_bets, winnings, profit_loss;
+    String player_id;
     int bet=0, win=0, prftlos=0;
     List<HistoryGetSet> historyList = new ArrayList<>();
     public TodaysHistory() {
@@ -47,20 +47,16 @@ public class TodaysHistory extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_todays_history, container, false);
-    }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_todays_history);
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        listView = (ListView) findViewById(R.id.list);
+        total_bets = (TextView) findViewById(R.id.txttotalbets);
+        winnings = (TextView) findViewById(R.id.txtwinnings);
+        profit_loss = (TextView) findViewById(R.id.txtprftlos);
 
-        listView = (ListView) view.findViewById(R.id.list);
-        total_bets = (TextView) view.findViewById(R.id.txttotalbets);
-        winnings = (TextView) view.findViewById(R.id.txtwinnings);
-        profit_loss = (TextView) view.findViewById(R.id.txtprftlos);
+        player_id = this.getIntent().getStringExtra("paler_id");
 
         getHistory();
 
@@ -69,8 +65,8 @@ public class TodaysHistory extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 HistoryGetSet item = historyList.get(i);
                 //item.getTimeSlotId();
-                Log.i("userid", "" + item.getTimeSlotId() + " id " + getActivity().getSharedPreferences(getString(R.string.prefrence), Context.MODE_PRIVATE).getString("player_id", ""));
-                android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                Log.i("userid", "" + item.getTimeSlotId() + " id " + getSharedPreferences(getString(R.string.prefrence), Context.MODE_PRIVATE).getString("player_id", ""));
+                android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
                 android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 TodaysSummary fragment = new TodaysSummary();
                 Bundle args = new Bundle();
@@ -85,7 +81,7 @@ public class TodaysHistory extends Fragment {
 
     private void getHistory()
     {
-        ConnectionDetector connectionDetector = new ConnectionDetector(getActivity());
+        ConnectionDetector connectionDetector = new ConnectionDetector(TodaysHistory.this);
         if(connectionDetector.isConnectingToInternet()) {
             String tag_string_req = "string_req";
             DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
@@ -102,9 +98,9 @@ public class TodaysHistory extends Fragment {
             String week= days[14]+"%20To%20"+days[0];
             try {
 
-             String url = getString(R.string.get_history_by_week) + getActivity().getSharedPreferences(getString(R.string.prefrence), Context.MODE_PRIVATE).getString("player_id", "")+"&week="+week;
+             String url = getString(R.string.get_history_by_week) + player_id+"&week="+week;
                 Log.i("url", "" + url);
-            final ProgressDialog pDialog = new ProgressDialog(getActivity());
+            final ProgressDialog pDialog = new ProgressDialog(TodaysHistory.this);
             pDialog.setMessage("Loading...");
             pDialog.show();
             final String TAG = "login";
@@ -149,92 +145,10 @@ public class TodaysHistory extends Fragment {
                                         prftlos+= pl;
                                     }
 
-
-                                    /*String first = item.getString("first_digit");
-                                    String second = item.getString("second_digit");
-                                    String third = item.getString("jodi_digit");
-                                    //Toast.makeText(getActivity(),"1 = "+first+" 2 = "+second+" 3 = "+third,Toast.LENGTH_SHORT).show();
-                                    if(!first.equals("null"))
-                                    {
-                                        if(item.getString("game_type").equals("1")) {
-                                            rowItem.setNumber(first+"(I)");
-                                        }
-                                        else if(item.getString("game_type").equals("2"))
-                                        {
-                                            rowItem.setNumber(first+"(II)");
-                                        }
-                                        else if(item.getString("game_type").equals("3"))
-                                        {
-                                            rowItem.setNumber(first+"(III)");
-                                        }
-                                    }
-                                    else if(!second.equals("null")) {
-
-                                        if(item.getString("game_type").equals("1")) {
-                                            rowItem.setNumber(second+"(I)");
-                                        }
-                                        else if(item.getString("game_type").equals("2"))
-                                        {
-                                            rowItem.setNumber(second+"(II)");
-                                        }
-                                        else if(item.getString("game_type").equals("3"))
-                                        {
-                                            rowItem.setNumber(second+"(III)");
-                                        }
-
-                                    }
-                                    else if(!third.equals("null"))
-                                    {
-                                        if(item.getString("game_type").equals("1")) {
-                                            rowItem.setNumber(third+"(I)");
-                                        }
-                                        else if(item.getString("game_type").equals("2"))
-                                        {
-                                            rowItem.setNumber(third+"(II)");
-                                        }
-                                        else if(item.getString("game_type").equals("3"))
-                                        {
-                                            rowItem.setNumber(third+"(III)");
-                                        }
-
-                                    }*/
-
-                                  /*  String[] dateTime = item.getString("timeslot").split(" ");
-                                    String[] time = dateTime[1].split(":");
-                                    String[] timeSlot = time[1].split(":");
-                                    rowItem.setTime(time[0]+":"+timeSlot[0]);
-
-
-                                    rowItem.setResult(item.getString("result"));
-
-                                    if(item.getString("result").equals("1")) {
-                                    if(item.getString("game_type").equals("1"))
-                                    {
-                                        double amount = Double.parseDouble(item.getString("bet_amount")) * 8.5;
-
-                                        rowItem.setCharge(""+amount);
-                                    }
-                                    else if(item.getString("game_type").equals("2"))
-                                    {
-                                        double amount = Double.parseDouble(item.getString("bet_amount")) * 8.5;
-
-                                        rowItem.setCharge(""+amount);
-                                    }
-                                    else if(item.getString("game_type").equals("3"))
-                                    {
-                                        double amount = Double.parseDouble(item.getString("bet_amount")) * 85;
-
-                                            rowItem.setCharge("" + amount);
-                                        }
-                                    }
-                                    else{
-                                        rowItem.setCharge("-");
-                                    }*/
-
                                         historyList.add(rowItem);
 
                                 }
-                                HistoryAdapter adapter = new HistoryAdapter(getActivity(),historyList);
+                                HistoryAdapter adapter = new HistoryAdapter(getApplicationContext(),historyList);
                                 listView.setAdapter(adapter);
                                 total_bets.setText(""+bet);
                                 winnings.setText(""+win);
@@ -242,13 +156,13 @@ public class TodaysHistory extends Fragment {
                             }
                             else
                             {
-                                Toast.makeText(getActivity(), "something went wrong, please try again!!!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Something went wrong, please try again!!!", Toast.LENGTH_SHORT).show();
                             }
                         }
 
                     } catch (Exception e) {
                         pDialog.hide();
-                        Toast.makeText(getActivity(), "something went wrong please try again!!!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Something went wrong please try again!!!", Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
                     }
                 }
@@ -258,9 +172,9 @@ public class TodaysHistory extends Fragment {
                 public void onErrorResponse(VolleyError error) {
                     pDialog.hide();
                     if (error instanceof TimeoutError) {
-                        Toast.makeText(getActivity(), "Request Timeout!!!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Request Timeout!!!", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getActivity(), "History Not Present!!!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "History Not Present!!!", Toast.LENGTH_SHORT).show();
                     }
                     error.printStackTrace();
                     VolleyLog.d(TAG, "Error: " + error.getMessage());
@@ -280,7 +194,7 @@ public class TodaysHistory extends Fragment {
         }
         else
         {
-            Toast.makeText(getActivity(), "please check internet connetion!!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Please check internet connetion!!!", Toast.LENGTH_SHORT).show();
         }
     }
 

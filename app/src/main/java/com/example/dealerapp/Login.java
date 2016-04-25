@@ -4,8 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,13 +18,16 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -75,28 +76,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
 
     }
 
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_login, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-*/
     @Override
     public void onClick(View view)
     {
@@ -118,13 +97,6 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                 mPassword.requestFocus();
                 mPassword.setFocusable(true);
             }
-       /* else if(mUserName.getText().toString().trim().equals("admin"))
-        {
-            mInputUsername.setError("Invalid UserName!!!");
-            mInputPassword.setError("");
-            mUserName.requestFocus();
-            mUserName.setFocusable(true);
-        }*/
             else {
                 String tag_string_req = "string_req";
                 String url = getString(R.string.login);
@@ -146,63 +118,64 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                             if (object.getString("status").equals("true")) {
 
                                 JSONObject innerObject = new JSONObject(object.getString("data"));
-                                //System.out.println(" 2. " + sdf.format(dt));
-                                String[] serverTime = innerObject.getString("date").split(" ");
-                                try {
-                                    SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
-                                    Date systemDate = Calendar.getInstance().getTime();
-                                    String myDate = sdf.format(systemDate);
+                                if(innerObject.getString("role").equals("2")) {
+                                    //System.out.println(" 2. " + sdf.format(dt));
+                                    String[] serverTime = innerObject.getString("date").split(" ");
+                                    try {
+                                        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+                                        Date systemDate = Calendar.getInstance().getTime();
+                                        String myDate = sdf.format(systemDate);
 //                  txtCurrentTime.setText(myDate);
-                                    Log.i("ServerTime", "" + serverTime[1]);
-                                    Date Date1 = sdf.parse(myDate);
-                                    Date Date2 = sdf.parse(serverTime[1]);
+                                        Log.i("ServerTime", "" + serverTime[1]);
+                                        Date Date1 = sdf.parse(myDate);
+                                        Date Date2 = sdf.parse(serverTime[1]);
 
-                                    long millse = Date1.getTime() - Date2.getTime();
-                                    long mills = Math.abs(millse);
+                                        long millse = Date1.getTime() - Date2.getTime();
+                                        long mills = Math.abs(millse);
 
-                                    SharedPreferences.Editor editor = preferences.edit();
-                                    editor.putString("time", serverTime[1]);
-                                    int Hours = (int) (mills / (1000 * 60 * 60));
-                                    int Mins = (int) (mills / (1000 * 60)) % 60;
-                                    long Secs = (int) (mills / 1000) % 60;
+                                        SharedPreferences.Editor editor = preferences.edit();
+                                        editor.putString("time", serverTime[1]);
+                                        int Hours = (int) (mills / (1000 * 60 * 60));
+                                        int Mins = (int) (mills / (1000 * 60)) % 60;
+                                        long Secs = (int) (mills / 1000) % 60;
 
-                                    String diff = Hours + ":" + Mins + ":" + Secs; // updated value every1 second
-                                    Log.i("Time", "" + diff);
+                                        String diff = Hours + ":" + Mins + ":" + Secs; // updated value every1 second
+                                        Log.i("Time", "" + diff);
 
-                                    editor.putInt("houre", Hours);
-                                    editor.putInt("min", Mins);
-                                    editor.putLong("sec", Secs);
+                                        editor.putInt("houre", Hours);
+                                        editor.putInt("min", Mins);
+                                        editor.putLong("sec", Secs);
 
-                                    String default_amnt = innerObject.getString("default_amount");
+                                        String default_amnt = innerObject.getString("default_amount");
 
-                                    editor.putString("default_amt", innerObject.getString("default_amount"));
-                                    editor.putString("present_amount", innerObject.getString("present_amount"));
-                                    editor.putString("total_game", innerObject.getString("lottery_game_played"));
-                                    //store UserId and Password
-                                    editor.putString("player_id", innerObject.getString("player_id"));
-                                    editor.putString("player_password", mPassword.getText().toString().trim());
+                                        editor.putString("default_amt", innerObject.getString("default_amount"));
+                                        editor.putString("present_amount", innerObject.getString("present_amount"));
+                                        editor.putString("total_game", innerObject.getString("lottery_game_played"));
+                                        //store UserId and Password
+                                        editor.putString("dealer_id", innerObject.getString("player_id"));
+                                        editor.putString("player_password", mPassword.getText().toString().trim());
 
-                                    editor.putString("logged", "logged");
-                                    editor.putString("username", mUserName.getText().toString().trim());
-                                    editor.commit();
+                                        editor.putString("logged", "logged");
+                                        editor.putString("username", mUserName.getText().toString().trim());
+                                        editor.commit();
 
-                                /*Thread myThread = null;
-                                Runnable myRunnableThread = new CountDownRunner(serverTime[1]);
-                                myThread= new Thread(myRunnableThread);
-                                myThread.start();*/
-                                } catch (Exception e) {
-                                    e.printStackTrace();
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    startActivity(new Intent(getApplicationContext(), Home.class));
+                                    finish();
+                                    Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
                                 }
-
-                                startActivity(new Intent(getApplicationContext(), Home.class));
-                                finish();
-                                Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
+                                else{
+                                    Toast.makeText(getApplicationContext(), "Not valid user, please contact admin", Toast.LENGTH_SHORT).show();
+                                }
                             } else if (object.getString("status").equals("false")) {
                                 Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception e) {
                             pDialog.hide();
-                            Toast.makeText(getApplicationContext(), "something went wrong please try again!!!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Something went wrong please try again!!!", Toast.LENGTH_SHORT).show();
                             e.printStackTrace();
                         }
                     }
@@ -213,8 +186,20 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
 
                         if (error instanceof TimeoutError) {
                             Toast.makeText(getApplicationContext(), "Request Timeout!!!", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(getApplicationContext(), "something went wrong please try again!!!", Toast.LENGTH_SHORT).show();
+                        }
+                        else if(error instanceof ServerError){
+                            try{
+                            String responseBody = new String( error.networkResponse.data, "utf-8" );
+                            JSONObject jsonObject = new JSONObject( responseBody );
+                                Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                        } catch ( JSONException e ) {
+                            //Handle a malformed json response
+                        } catch (UnsupportedEncodingException err){
+
+                        }
+                        }
+                        else {
+                            Toast.makeText(getApplicationContext(), "Something went wrong please try again!!!", Toast.LENGTH_SHORT).show();
                         }
                         error.printStackTrace();
                         VolleyLog.d(TAG, "Error: " + error.getMessage());
@@ -310,9 +295,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                     if (h1 < 10) {
                         h1 = Integer.parseInt("0" + h1);
                     }
-		/*if (m < 10) {
-			m = "0" + m;
-		}*/
+
                     if (m1 >= 45) {
                         m1 = 59 - m1;
                     } else if (m1 >= 30) {

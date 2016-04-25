@@ -10,14 +10,14 @@
 
     <!--login api-->
     <string name="login">http://46.101.6.171/moneygame/api/players/login</string>
-    <string name="cricket_account">http://46.101.6.171/moneygame/api/cricket/accountsPlayerByWeek?player_id=</string>
-    <string name="cricket_daily">http://46.101.6.171/moneygame/api/cricket/accountsPlayerByDate?player_id=</string>
-    <string name="match_wise">http://46.101.6.171/moneygame/api/cricket/accountsPlayerBymatch?player_id=</string>
+    <string name="cricket_account">http://46.101.6.171/moneygame/api/dealers/accountsDealerByPlayerCricketWeekly?player_id=</string>
+    <string name="cricket_daily">http://46.101.6.171/moneygame/api/dealers/accountsDealerPlayerCricketWeeklyByDate?player_id=</string>
+    <string name="match_wise">http://46.101.6.171/moneygame/api/dealers/accountsDealerPlayerCricketWeeklyByMatch?player_id=</string>
     <string name="cricket_transaction_details">http://46.101.6.171/moneygame/api/cricket/accountsPlayerByTransactionId?transaction_id=</string>
 
-    <string name="get_today_history">http://46.101.6.171/moneygame/api/players/playerhistory?player_id=</string>
+    <string name="get_today_history">http://46.101.6.171/moneygame/api/dealers/accountsDealerPlayerLotteryWeeklyByDate?player_id=</string>
 
-    <string name="get_history_by_week">http://46.101.6.171/moneygame/api/players/accountsPlayerByWeek?player_id=</string>
+    <string name="get_history_by_week">http://46.101.6.171/moneygame/api/dealers/accountsDealerByPlayerLotteryWeekly?player_id=</string>
 
     <!--get account detail by date-->
     <string name="get_acc_by_date">http://46.101.6.171/moneygame/api/players/accountsPlayerByDate?player_id=</string>
@@ -28,12 +28,18 @@
     <string name="get_specific_transaction">http://46.101.6.171/moneygame/api/players/accountsPlayerByTransactionId?transaction_id=</string>
 
     <!-- Player list url-->
-    <string name="url_players_lottery">http://46.101.6.171/moneygame/api/dealers/accountsdealer?dealer_id=</string>
+    <string name="url_players_lottery">http://46.101.6.171/moneygame/api/dealers/accountsDealerLotteryWeekly?dealer_id=</string>
 
-    <string name="url_players_cricket">http://46.101.6.171/moneygame/api/dealers/dealerAccountsCricketWeekly?dealer_id=&amp;user_code=&amp;week=</string>
+    <string name="url_players_cricket">http://46.101.6.171/moneygame/api/dealers/accountsDealerCricketWeekly?dealer_id=</string>
+
+    <string name="url_players_combined">http://46.101.6.171/moneygame/api/dealers/accountsDealerCombinedWeekly?dealer_id=</string>
+
+    <string name="url_combined_weekly">http://46.101.6.171/moneygame/api/dealers/accountsDealerByPlayerCombinedWeekly?player_id=</string>
 
     <string name="title_activity_home">Home</string>
-    <string name="title_activity_week_list">WeekList</string>
-    <string name="title_activity_tab_container">TabContainer</string>
+    <string name="title_activity_week_list">Week List</string>
+    <string name="title_activity_cricket_accounts">Cricket Accounts</string>
+    <string name="title_activity_lottery_accounts">Lottery Accounts</string>
+    <string name="title_activity_tab_container">Players Accounts</string>
 
 </resources>

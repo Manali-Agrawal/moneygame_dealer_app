@@ -2,13 +2,11 @@ package com.example.dealerapp;
 
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -36,10 +34,11 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CricketAccounts extends Fragment {
+public class CricketAccounts extends AppCompatActivity {
 
     ListView listView;
     TextView total_bets, winnings, profit_loss;
+    String player_id;
     int bet=0, win=0, prftlos=0;
     List<HistoryGetSet> historyList = new ArrayList<>();
     public CricketAccounts() {
@@ -48,21 +47,17 @@ public class CricketAccounts extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cricket_accounts, container, false);
-    }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_cricket_accounts);
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
-        listView = (ListView) view.findViewById(R.id.list);
-        total_bets = (TextView) view.findViewById(R.id.txttotalbets);
-        winnings = (TextView) view.findViewById(R.id.txtwinnings);
-        profit_loss = (TextView) view.findViewById(R.id.txtprftlos);
+        listView = (ListView) findViewById(R.id.list);
+        total_bets = (TextView) findViewById(R.id.txttotalbets);
+        winnings = (TextView) findViewById(R.id.txtwinnings);
+        profit_loss = (TextView) findViewById(R.id.txtprftlos);
 
+        player_id = this.getIntent().getStringExtra("player_id");
         getHistory();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -70,8 +65,8 @@ public class CricketAccounts extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 HistoryGetSet item = historyList.get(i);
                 //item.getTimeSlotId();
-                Log.i("userid", "" + item.getTimeSlotId() + " id " + getActivity().getSharedPreferences(getString(R.string.prefrence), Context.MODE_PRIVATE).getString("player_id", ""));
-                android.support.v4.app.FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+                android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
                 android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 CricketHistory fragment = new CricketHistory();
                 Bundle args = new Bundle();
@@ -86,7 +81,7 @@ public class CricketAccounts extends Fragment {
 
     private void getHistory()
     {
-        ConnectionDetector connectionDetector = new ConnectionDetector(getActivity());
+        ConnectionDetector connectionDetector = new ConnectionDetector(getApplicationContext());
         if(connectionDetector.isConnectingToInternet()) {
             String tag_string_req = "string_req";
             DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
@@ -103,9 +98,9 @@ public class CricketAccounts extends Fragment {
             String week= days[14]+"%20To%20"+days[0];
             try {
 
-                String url = getString(R.string.cricket_account) + getActivity().getSharedPreferences(getString(R.string.prefrence), Context.MODE_PRIVATE).getString("player_id", "")+"&week="+week;
+                String url = getString(R.string.cricket_account) + player_id+"&week="+week;
                 Log.i("url", "" + url);
-                final ProgressDialog pDialog = new ProgressDialog(getActivity());
+                final ProgressDialog pDialog = new ProgressDialog(CricketAccounts.this);
                 pDialog.setMessage("Loading...");
                 pDialog.show();
                 final String TAG = "login";
@@ -236,7 +231,7 @@ public class CricketAccounts extends Fragment {
                                         historyList.add(rowItem);
 
                                     }
-                                    HistoryAdapter adapter = new HistoryAdapter(getActivity(),historyList);
+                                    HistoryAdapter adapter = new HistoryAdapter(getApplicationContext(),historyList);
                                     listView.setAdapter(adapter);
                                     total_bets.setText(""+bet);
                                     winnings.setText(""+win);
@@ -244,13 +239,13 @@ public class CricketAccounts extends Fragment {
                                 }
                                 else
                                 {
-                                    Toast.makeText(getActivity(), "something went wrong, please try again!!!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "something went wrong, please try again!!!", Toast.LENGTH_SHORT).show();
                                 }
                             }
 
                         } catch (Exception e) {
                             pDialog.hide();
-                            Toast.makeText(getActivity(), "something went wrong please try again!!!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "something went wrong please try again!!!", Toast.LENGTH_SHORT).show();
                             e.printStackTrace();
                         }
                     }
@@ -260,9 +255,9 @@ public class CricketAccounts extends Fragment {
                     public void onErrorResponse(VolleyError error) {
                         pDialog.hide();
                         if (error instanceof TimeoutError) {
-                            Toast.makeText(getActivity(), "Request Timeout!!!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Request Timeout!!!", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(getActivity(), "History Not Present!!!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "History Not Present!!!", Toast.LENGTH_SHORT).show();
                         }
                         error.printStackTrace();
                         VolleyLog.d(TAG, "Error: " + error.getMessage());
@@ -282,7 +277,7 @@ public class CricketAccounts extends Fragment {
         }
         else
         {
-            Toast.makeText(getActivity(), "please check internet connetion!!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "please check internet connetion!!!", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#dedede"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/activity_cricket_transaction_details"
+    tools:context="bidding.example.com.bidding.TansactionWiseHistory">
+    <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+
+    <LinearLayout
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:layout_weight="1"
+            android:textColor="@color/textColor"
+            android:paddingLeft="5dp"
+            android:text="Transaction No."
+            android:layout_gravity="center"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/transactionNo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:layout_weight="1"
+            android:textColor="@color/textColor"
+            android:paddingLeft="5dp"
+            android:text="Trans. Chips"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:visibility="gone"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:layout_weight="1"
+            android:textColor="@color/textColor"
+            android:paddingLeft="5dp"
+            android:text="Total Chips"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:layout_weight="1"
+            android:textColor="@color/textColor"
+            android:text="Total Payout"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+    </LinearLayout>
+    <View
+        android:id="@+id/view"
+        android:layout_below="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="0.01dp"
+        android:background="@color/textColor"/>
+    <ListView
+        android:id="@+id/transactionHistory"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/view"/>
+
+
+</RelativeLayout>

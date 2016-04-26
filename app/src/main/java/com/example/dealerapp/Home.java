@@ -3,21 +3,22 @@ package com.example.dealerapp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.TextView;
 
-public class Home extends AppCompatActivity {
+public class Home extends AppCompatActivity implements View.OnClickListener {
 
-    private ListView list;
+    private CardView mLotteryCard,mCricketCard,mCombined, mLogout;
+    private TextView user;
     public static int flag=0;
-    private static String [] List={"Cricket","Lottery","Combined"};
+    String user_code;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,32 +27,58 @@ public class Home extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        list=(ListView) findViewById(R.id.listview);
-        list.setAdapter(new ArrayAdapter<String>(getApplicationContext(), R.layout.child_game_list, R.id.textView, List));
+        user=(TextView) findViewById(R.id.textuser);
 
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if(position==0){
-                        flag=0;
-                        startActivity(new Intent(getApplicationContext(), TabContainer.class).putExtra("url",getString(R.string.url_players_cricket)));
+        user_code= getSharedPreferences(getString(R.string.prefrence), Context.MODE_PRIVATE).getString("username", "");
 
-                    }
-                if(position==1){
-                    flag=1;
-                    startActivity(new Intent(getApplicationContext(), TabContainer.class).putExtra("url",getString(R.string.url_players_lottery)));
+        user.setText("Welcome, "+user_code+"!");
 
-                }
-                if(position==2){
-                    flag=2;
-                    startActivity(new Intent(getApplicationContext(), TabContainer.class).putExtra("url",getString(R.string.url_players_combined)));
+        mLotteryCard=(CardView) findViewById(R.id.lottery);
+        mCricketCard=(CardView) findViewById(R.id.cricket);
+        mCombined=(CardView) findViewById(R.id.combined);
+        mLogout=(CardView) findViewById(R.id.logout);
 
-                }
-            }
-        });
+        mLotteryCard.setCardBackgroundColor(Color.parseColor("#3aace2"));
+        mCricketCard.setCardBackgroundColor(Color.parseColor("#0bc3bb"));
+        mCombined.setCardBackgroundColor(Color.parseColor("#CDAF95"));
+        mLogout.setCardBackgroundColor(Color.parseColor("#8c9e90"));
+
+        mLotteryCard.setOnClickListener(this);
+        mCricketCard.setOnClickListener(this);
+        mCombined.setOnClickListener(this);
+        mLogout.setOnClickListener(this);
+
 
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.cricket:
+                flag=0;
+                startActivity(new Intent(getApplicationContext(), TabContainer.class).putExtra("url",getString(R.string.url_players_cricket)));
+                break;
+
+            case R.id.lottery:
+                flag=1;
+                startActivity(new Intent(getApplicationContext(), TabContainer.class).putExtra("url",getString(R.string.url_players_lottery)));
+                break;
+
+            case R.id.combined:
+                flag=2;
+                startActivity(new Intent(getApplicationContext(), TabContainer.class).putExtra("url",getString(R.string.url_players_combined)));
+                break;
+
+            case R.id.logout:
+                SharedPreferences settings = getSharedPreferences(getString(R.string.prefrence), Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.remove("logged");
+                editor.commit();
+                startActivity(new Intent(getApplicationContext(), Login.class));
+                finish();
+                break;
+        }
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

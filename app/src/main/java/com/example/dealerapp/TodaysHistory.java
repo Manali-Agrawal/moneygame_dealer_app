@@ -2,7 +2,7 @@ package com.example.dealerapp;
 
 
 import android.app.ProgressDialog;
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -24,10 +24,7 @@ import com.android.volley.toolbox.StringRequest;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 
@@ -38,7 +35,7 @@ public class TodaysHistory extends AppCompatActivity {
 
     ListView listView;
     TextView total_bets, winnings, profit_loss;
-    String player_id;
+    String player_id, week;
     int bet=0, win=0, prftlos=0;
     List<HistoryGetSet> historyList = new ArrayList<>();
     public TodaysHistory() {
@@ -56,7 +53,8 @@ public class TodaysHistory extends AppCompatActivity {
         winnings = (TextView) findViewById(R.id.txtwinnings);
         profit_loss = (TextView) findViewById(R.id.txtprftlos);
 
-        player_id = this.getIntent().getStringExtra("paler_id");
+        player_id = this.getIntent().getStringExtra("player_id");
+        week = this.getIntent().getStringExtra("week");
 
         getHistory();
 
@@ -64,16 +62,7 @@ public class TodaysHistory extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 HistoryGetSet item = historyList.get(i);
-                //item.getTimeSlotId();
-                Log.i("userid", "" + item.getTimeSlotId() + " id " + getSharedPreferences(getString(R.string.prefrence), Context.MODE_PRIVATE).getString("player_id", ""));
-                android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-                android.support.v4.app.FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                TodaysSummary fragment = new TodaysSummary();
-                Bundle args = new Bundle();
-                args.putString("date", item.getDate());
-                fragment.setArguments(args);
-                fragmentTransaction.replace(R.id.containar1, fragment);
-                fragmentTransaction.commit();
+               startActivity(new Intent(TodaysHistory.this, TodaysSummary.class).putExtra("date",item.getDate()));
             }
         });
 
@@ -84,18 +73,7 @@ public class TodaysHistory extends AppCompatActivity {
         ConnectionDetector connectionDetector = new ConnectionDetector(TodaysHistory.this);
         if(connectionDetector.isConnectingToInternet()) {
             String tag_string_req = "string_req";
-            DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-            Calendar calendar = Calendar.getInstance();
-            //calendar.setFirstDayOfWeek(Calendar.MONDAY);
-            //calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 
-            String[] days = new String[15];
-            for (int i = 0; i < 15; i++)
-            {
-                days[i] = format.format(calendar.getTime());
-                calendar.add(Calendar.DAY_OF_MONTH, -1);
-            }
-            String week= days[14]+"To"+days[0];
             try {
 
              String url = getString(R.string.get_history_by_week) + player_id+"&week="+week;
@@ -117,7 +95,8 @@ public class TodaysHistory extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             if(jsonObject.getString("status").equals("true"))
                             {
-                                JSONArray jsonArray = jsonObject.getJSONArray("data");
+                                JSONObject jsonObject1= jsonObject.getJSONObject("data");
+                                JSONArray jsonArray = jsonObject1.getJSONArray("data_weekly");
                                 for(int i=0; i < jsonArray.length(); i++)
                                 {
                                     JSONObject item = jsonArray.getJSONObject(i);

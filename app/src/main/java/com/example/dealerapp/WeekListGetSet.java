@@ -9,6 +9,15 @@ String player_nm;
     String chips;
     String wins;
     String comm;
+    String player_id;
+
+    public String getPlayer_id() {
+        return player_id;
+    }
+
+    public void setPlayer_id(String player_id) {
+        this.player_id = player_id;
+    }
 
     public String getComm() {
         return comm;

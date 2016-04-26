@@ -28,34 +28,38 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
-
-public class TansactionWiseHistory extends AppCompatActivity {
+public class CricketTransactionDetails extends AppCompatActivity {
 
     private ListView mList;
     private List<HistoryGetSet> list = new ArrayList<>();
     private TimeSlotAdapter adapter;
     List<TransactionDetailsGetSet> transList;
-    String transaction_id, formattedDate;
+    String transaction_id, tr_time, reslt, mtch_nm, team1, team2, win, loss;
     private static int flag=0;
+    String formattedDate, gamenm, matchid, mid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tansaction_wise_history);
+        setContentView(R.layout.activity_cricket_transaction_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         mList= (ListView) findViewById(R.id.transactionHistory);
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+        matchid = this.getIntent().getStringExtra("match_id");
+        mid = this.getIntent().getStringExtra("mid");
+        team1 = this.getIntent().getStringExtra("teama");
+        team2 = this.getIntent().getStringExtra("teamb");
+        gamenm = this.getIntent().getStringExtra("game");
         try {
             if (this.getIntent().hasExtra("date")) {
-                String dte = this.getIntent().getStringExtra("date");
-                Date dt=df.parse(dte);
-                formattedDate=df.format(dt);
+
+                formattedDate=this.getIntent().getStringExtra("date");
             } else {
                 formattedDate = df.format(cal.getTime());
             }
@@ -64,33 +68,34 @@ public class TansactionWiseHistory extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        Log.i("url",""+getString(R.string.get_transaction) +getSharedPreferences(getString(R.string.prefrence), Context.MODE_PRIVATE).getString("player_id", "") + "&date="+formattedDate+"&draw_time=" + getIntent().getStringExtra("timeslot"));
-        getTransactionDetails(getString(R.string.get_transaction) + getSharedPreferences(getString(R.string.prefrence), Context.MODE_PRIVATE).getString("player_id", "") + "&date=" + formattedDate + "&draw_time=" + getIntent().getStringExtra("timeslot"));
+        Log.i("url", "" + getString(R.string.game_wise) + getSharedPreferences(getString(R.string.prefrence), Context.MODE_PRIVATE).getString("player_id", "") + "&date=" + formattedDate + "&match_id=" + matchid + "&m_id=" + mid);
+        getTransactionDetails(getString(R.string.game_wise) + getSharedPreferences(getString(R.string.prefrence), Context.MODE_PRIVATE).getString("player_id", "") + "&date=" + formattedDate + "&match_id=" + matchid + "&m_id=" +mid);
 
         mList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 HistoryGetSet item = list.get(i);
                 transaction_id = item.getTransactionNo();
-                Log.i("url",""+getString(R.string.get_specific_transaction)+item.getTransactionNo()+ "&date="+formattedDate+"&draw_time=" + getIntent().getStringExtra("timeslot"));
-                getDetails(getString(R.string.get_specific_transaction) + item.getTransactionNo() + "&date=" + formattedDate + "&draw_time=" + getIntent().getStringExtra("timeslot"));
+                Log.i("url", "" + getString(R.string.cricket_transaction_details) + item.getTransactionNo());
+                getDetails(getString(R.string.cricket_transaction_details) + item.getTransactionNo());
             }
         });
     }
 
 
-    private void showDetails(List<TransactionDetailsGetSet> List,String tno,String dTime,String tTime,String result,String whichBet,String payout)
+    private void showDetails(List<TransactionDetailsGetSet> List,String mnm,String tno, String time, String res, String whichBet,String payout, String wins, String los)
     {
 // custom dialog
-        final Dialog dialog = new Dialog(TansactionWiseHistory.this);
-        dialog.setContentView(R.layout.transaction_details_custom_layout);
+        final Dialog dialog = new Dialog(CricketTransactionDetails.this);
+        dialog.setContentView(R.layout.cricket_transaction);
         dialog.setTitle("Transaction Details");
 
-        TextView mDigit,mChip,mTransNo,mDrawTime,mTransTime,mResult,mTotal,mBetText,mWin,mLoss;
+
+        TextView mDigit,mMtch,mTransNo,mDrawTime,mTransTime,mResult,mTotal,mBetText,mWin,mLoss;
         ListView mListView;
 
 //        mDigit = (TextView) dialog.findViewById(R.id.digit);
-        //      mChip = (TextView) dialog.findViewById(R.id.chip);
+        mMtch = (TextView) dialog.findViewById(R.id.mtch_nm);
         mTransNo = (TextView) dialog.findViewById(R.id.trans_id);
         mDrawTime = (TextView) dialog.findViewById(R.id.draw_time);
         mTransTime = (TextView) dialog.findViewById(R.id.trans_time);
@@ -102,15 +107,20 @@ public class TansactionWiseHistory extends AppCompatActivity {
 
         mListView = (ListView) dialog.findViewById(R.id.list);
 
-        TransacionDetailsAdapter adapter = new TransacionDetailsAdapter(getApplicationContext(),List);
+        CricketTransactionAdapter adapter = new CricketTransactionAdapter(getApplicationContext(),List);
         adapter.notifyDataSetChanged();
         mListView.setAdapter(adapter);
-        /*mDigit.setText(digit);
-        mChip.setText(chip);*/
+
+        mMtch.setText(mnm);
         mTransNo.setText(tno);
-        mDrawTime.setText(dTime);
-        mTransTime.setText(tTime);
-        mResult.setText(result);
+        mTransTime.setText(time);
+        if(res.equals("1")){
+            mResult.setText("Win");
+        }
+        else{
+            mResult.setText("Loss");
+        }
+
 
         int chip=0;
         for(TransactionDetailsGetSet item:transList)
@@ -119,31 +129,11 @@ public class TansactionWiseHistory extends AppCompatActivity {
         }
         mTotal.setText(""+chip);
 
-        if(whichBet.equals("Single Digit Second")) {
-            mBetText.setText("Single Digit Second");
-            //double amt = Integer.parseInt(Chip)*8.5;
+        mBetText.setText(whichBet);
+        //double amt = Integer.parseInt(Chip)*8.5;
 
-        }
-        else if(whichBet.equals("Single Digit First"))
-        {
-            mBetText.setText("Single Digit First");
-            //double amt = Integer.parseInt(mChip.getText().toString()) * 8.5;
-            //    mTotal.setText(mChip.getText().toString());
-        }
-        else{
-            mBetText.setText("Jodi");
-        }
-
-        if(flag==0)
-        {
-            mWin.setText("0");
-            mLoss.setText(payout);
-        }
-        else
-        {
-            mWin.setText(payout);
-            mLoss.setText("0");
-        }
+        mWin.setText(wins);
+        mLoss.setText(los);
 
         Button cancel = (Button) dialog.findViewById(R.id.cancel);
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -163,8 +153,8 @@ public class TansactionWiseHistory extends AppCompatActivity {
         if(connectionDetector.isConnectingToInternet()) {
             String tag_string_req = "string_req";
 
-            Log.i("url",url);
-            final ProgressDialog pDialog = new ProgressDialog(TansactionWiseHistory.this);
+            Log.i("url", url);
+            final ProgressDialog pDialog = new ProgressDialog(CricketTransactionDetails.this);
             pDialog.setMessage("Loading...");
             pDialog.show();
             final String TAG = "login";
@@ -176,46 +166,52 @@ public class TansactionWiseHistory extends AppCompatActivity {
                     pDialog.hide();
                     try
                     {
-                        Log.i("res",""+response);
+                        Log.i("res", "" + response);
                         JSONObject jsonObject = new JSONObject(response);
                         if(jsonObject.getString("status").equals("true")) {
                             JSONObject object = jsonObject.getJSONObject("data");
                             JSONArray jsonArray = object.getJSONArray("data_weekly");
                             if (jsonArray.length() != 0) {
                                 for (int i = 0; i < jsonArray.length(); i++) {
-                                /*{
-                                    "sr_no": 1,
-                                        "user_code": "AUR00100001",
-                                        "bet_amount": "200",
-                                        "payout": null,
-                                        "transaction_id": "AUR00100001L294",
-                                        "total_bet": 200,
-                                        "total_wins": 0
-                                }*/
+
                                     HistoryGetSet item = new HistoryGetSet();
                                     JSONObject trnsaction = jsonArray.getJSONObject(i);
 
-                                    item.setTransactionNo(trnsaction.getString("transaction_id"));
-                                    item.setAmount(trnsaction.getString("bet_amount"));
-                                    if (trnsaction.getString("payout").equals("null")) {
-                                        item.setTime("0");
-                                    } else {
-                                        item.setTime(trnsaction.getString("payout"));
+
+//                                    team1 = trnsaction.getString("team_a");
+//                                    team2 = trnsaction.getString("team_b");
+                                    String game = trnsaction.getString("game_name");
+                                    game = game.replace("_", " ");
+                                    if (game.contains("team1")) {
+                                        game = game.replace("team1", team1);
+                                    } else if (game.contains("team2")) {
+                                        game = game.replace("team2", team2);
                                     }
 
+//                                    if (game.equals(gamenm)) {
+                                        item.setGame(game);
+                                        item.setTransactionNo(trnsaction.getString("transaction_id"));
+
+                                        item.setAmount(trnsaction.getString("bet_amount"));
+                                        if (trnsaction.getString("payout").equals("null")) {
+                                            item.setTime("0");
+                                        } else {
+                                            item.setTime(trnsaction.getString("payout"));
+                                        }
                                     list.add(item);
+//                                }
                                 }
                                 adapter = new TimeSlotAdapter(getApplicationContext(), list);
                                 mList.setAdapter(adapter);
                             }
                             else
                             {
-                                Toast.makeText(getApplicationContext(),"No transaction present to display!",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "No transaction present to display!", Toast.LENGTH_SHORT).show();
                             }
                         }
                         else
                         {
-                            Toast.makeText(getApplicationContext(),"Something went wrong please try again!",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "something went wrong please try again!", Toast.LENGTH_SHORT).show();
                         }
                     }catch (Exception e)
                     {
@@ -246,7 +242,7 @@ public class TansactionWiseHistory extends AppCompatActivity {
         }
         else
         {
-            Toast.makeText(getApplicationContext(),"please check internet connetion!!!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Please check internet connection!!!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -258,8 +254,8 @@ public class TansactionWiseHistory extends AppCompatActivity {
         if(connectionDetector.isConnectingToInternet()) {
             String tag_string_req = "string_req";
 
-            Log.i("url",url);
-            final ProgressDialog pDialog = new ProgressDialog(TansactionWiseHistory.this);
+            Log.i("url", url);
+            final ProgressDialog pDialog = new ProgressDialog(CricketTransactionDetails.this);
             pDialog.setMessage("Loading...");
             pDialog.show();
             final String TAG = "login";
@@ -270,72 +266,53 @@ public class TansactionWiseHistory extends AppCompatActivity {
                 public void onResponse(String response) {
                     pDialog.hide();
                     String payout="",digit,bAmt,wamt,whichBet="",transactionNo = null;
-                    String dTime = "", tTime = "", result ="", drawTime= "", currentTime="";
+                    String dTime = "", tTime = "", result ="";
                     transList = new ArrayList<>();
                     try
                     {
-                        Log.i("res",""+response);
+                        Log.i("res", "" + response);
 
                         JSONObject jsonObject = new JSONObject(response);
                         if(jsonObject.getString("status").equals("true")) {
                             JSONObject object = jsonObject.getJSONObject("data");
-                            JSONObject jsonObject1 = object.getJSONObject("data_weekly");
-                            JSONArray jsonArray = jsonObject1.getJSONArray(transaction_id);
+                            JSONArray jsonArray = object.getJSONArray("data_weekly");
                             if (jsonArray.length() != 0) {
                                 for (int i = 0; i < jsonArray.length(); i++) {
 
                                     JSONObject trnsaction = jsonArray.getJSONObject(i);
 
                                     TransactionDetailsGetSet item = new TransactionDetailsGetSet();
-                                    if (trnsaction.getInt("first_digit")==999 && trnsaction.getInt("second_digit")==999) {
 
-                                        item.setDigit(trnsaction.getString("jodi_digit"));
-                                        item.setChip(trnsaction.getString("chips"));
-                                        whichBet = "Jodi Digit";
-
-                                    } else if(trnsaction.getInt("first_digit")==999 && trnsaction.getInt("jodi_digit")==999){
-
-                                        item.setDigit(trnsaction.getString("second_digit"));
-                                        item.setChip(trnsaction.getString("chips"));
-                                        whichBet = "Single Digit Second";
+                                    mtch_nm=trnsaction.getString("match_name");
+                                    reslt=trnsaction.getString("result");
+                                    item.setChip(trnsaction.getString("chips"));
+                                    team1=trnsaction.getString("team_a");
+                                    team2=trnsaction.getString("team_b");
+                                    tr_time=trnsaction.getString("transaction_time");
+                                    String per=trnsaction.getString("perticulars");
+                                    per=per.replace("_"," ");
+                                    if(per.contains("team 1")){
+                                        per=per.replace("team 1",team1);
                                     }
-                                    else{
-                                        item.setDigit(trnsaction.getString("first_digit"));
-                                        item.setChip(trnsaction.getString("chips"));
-                                        whichBet = "Single Digit First";
+                                    else if(per.contains("team 2")) {
+                                        per=per.replace("team 2",team2);
+                                    }
+                                    item.setParticular(per);
+                                    item.setOdds(trnsaction.getString("odds"));
+                                    whichBet = trnsaction.getString("game_name");
+                                    whichBet = whichBet.replace("_"," ");
+                                    if(whichBet.contains("team1")){
+                                        whichBet=whichBet.replace("team1",team1);
+                                    }
+                                    else if(whichBet.contains("team2")){
+                                        whichBet=whichBet.replace("team2",team2);
                                     }
 
+                                    win= trnsaction.getString("win");
+                                    loss= trnsaction.getString("loss");
                                     transList.add(item);
 
 //                                    transactionNo = trnsaction.getString("transaction_id");
-
-                                    dTime = trnsaction.getString("drawtime");
-                                    currentTime = trnsaction.getString("time");
-                                    String currentSplit[]=currentTime.split(" ");
-                                    if(!dTime.equals("")){
-                                        Calendar cal = Calendar.getInstance();
-                                        SimpleDateFormat dff = new SimpleDateFormat("yyyy-MM-dd");
-                                        SimpleDateFormat df = new SimpleDateFormat("hh:mm aa");
-                                        SimpleDateFormat df1 = new SimpleDateFormat("hh:mm:ss aa");
-                                        String t=df.format(cal.getTime());
-                                        Date d1=df.parse(dTime);
-                                        Date d2=df1.parse(currentSplit[1]+" "+currentSplit[2]);
-
-                                        if(currentSplit[0].equals(formattedDate)) {
-                                            if (d1.compareTo(d2) < 0) {
-                                                Log.i("if time", "" + d1.compareTo(d2));
-                                                drawTime = dTime;
-                                                result = trnsaction.getString("lucky_number");
-                                            } else {
-                                                Log.i("else time", "" + dTime);
-                                            }
-                                        }
-                                        else{
-                                            drawTime = dTime;
-                                            result = trnsaction.getString("lucky_number");
-                                        }
-
-                                    }
                                     if (trnsaction.getString("total_wins").equals("0.00")) {
                                         flag=0;
                                         payout = trnsaction.getString("total_bet");
@@ -343,19 +320,14 @@ public class TansactionWiseHistory extends AppCompatActivity {
                                         flag=1;
                                         payout = trnsaction.getString("total_wins");
                                     }
-                                    tTime = trnsaction.getString("trans_time");
-
-                                    //String digit,String chip,String tno,String dTime,String tTime,String result
-
-
 
                                 }
-                                showDetails(transList,transaction_id,drawTime,tTime,result,whichBet,payout);
+                                showDetails(transList,mtch_nm, transaction_id,tr_time, reslt,  whichBet,payout, win, loss);
                             }
                         }
                         else
                         {
-                            Toast.makeText(getApplicationContext(),"No transaction present to display!",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "No transaction present to display!", Toast.LENGTH_SHORT).show();
                         }
                     }catch (Exception e)
                     {
@@ -386,7 +358,11 @@ public class TansactionWiseHistory extends AppCompatActivity {
         }
         else
         {
-            Toast.makeText(getApplicationContext(),"please check internet connetion!!!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "please check internet connetion!!!", Toast.LENGTH_SHORT).show();
         }
     }
 }
+
+
+
+

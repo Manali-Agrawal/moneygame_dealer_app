@@ -1,17 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingTop="5dp"
+    android:paddingBottom="@dimen/activity_horizontal_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:orientation="vertical"
     tools:showIn="@layout/activity_home" tools:context="com.example.dealerapp.Home">
 
-    <ListView
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:id="@+id/textuser"
+            android:textColor="#fff"
+            android:textSize="16sp"
+            android:background="@drawable/button_border"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/listview"
-        android:background="#fff"></ListView>
-</RelativeLayout>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <android.support.v7.widget.CardView
+        android:id="@+id/cricket"
+        android:layout_width="180dp"
+        android:layout_height="@dimen/dashboard_menu"
+        android:layout_marginTop="10dp"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="2dp"
+        card_view:cardUseCompatPadding="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:layout_gravity="center_horizontal">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cricket"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="@color/textColorWhite"
+            />
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/lottery"
+        android:layout_width="180dp"
+        android:layout_height="@dimen/dashboard_menu"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="2dp"
+        card_view:cardUseCompatPadding="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:layout_gravity="center_horizontal">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lottery"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="@color/textColorWhite"
+            />
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/combined"
+        android:layout_width="180dp"
+        android:layout_height="@dimen/dashboard_menu"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="2dp"
+        card_view:cardUseCompatPadding="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:layout_gravity="center_horizontal">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Combined"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="@color/textColorWhite"
+            />
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/logout"
+        android:layout_width="180dp"
+        android:layout_height="@dimen/dashboard_menu"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="2dp"
+        card_view:cardUseCompatPadding="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:layout_gravity="center_horizontal">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="@color/textColorWhite"
+            />
+    </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+    </ScrollView>
+</LinearLayout>

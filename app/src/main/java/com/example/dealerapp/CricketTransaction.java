@@ -3,6 +3,7 @@ package com.example.dealerapp;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -31,7 +32,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-
 public class CricketTransaction extends AppCompatActivity {
 
     private ListView mList;
@@ -40,7 +40,7 @@ public class CricketTransaction extends AppCompatActivity {
     List<TransactionDetailsGetSet> transList;
     String transaction_id, tr_time, reslt, mtch_nm, team1, team2, win, loss;
     private static int flag=0;
-    String formattedDate;
+    String formattedDate, matchid, mid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +48,9 @@ public class CricketTransaction extends AppCompatActivity {
         setContentView(R.layout.activity_cricket_transaction);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        matchid = getIntent().getStringExtra("matchid");
+
 
         String tempDate = getIntent().getExtras().getString("date");
         Log.i("Date::::::::::::", tempDate.toString());
@@ -75,9 +78,11 @@ public class CricketTransaction extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 HistoryGetSet item = list.get(i);
-                transaction_id = item.getGame();
-                Log.i("url", "" + getString(R.string.cricket_transaction_details) + item.getGame());
-                getDetails(getString(R.string.cricket_transaction_details) + item.getGame());
+                transaction_id = item.getTransactionNo();
+                mid=item.getNumber();
+//                Log.i("url",""+getString(R.string.cricket_transaction_details)+item.getGame());
+//                getDetails(getString(R.string.cricket_transaction_details) + item.getGame());
+                startActivity(new Intent(getApplicationContext(), CricketTransactionDetails.class).putExtra("game",transaction_id).putExtra("date",formattedDate).putExtra("match_id",matchid).putExtra("mid",mid).putExtra("teama",team1).putExtra("teamb",team2));
             }
         });
     }
@@ -189,6 +194,7 @@ public class CricketTransaction extends AppCompatActivity {
                                         game=game.replace("team2",team2);
                                     }
 
+                                    item.setNumber(trnsaction.getString("m_id"));
                                     item.setTransactionNo(game);
                                     item.setAmount(trnsaction.getString("bet_amount"));
                                     if (trnsaction.getString("payout").equals("null")) {
@@ -240,7 +246,7 @@ public class CricketTransaction extends AppCompatActivity {
         }
         else
         {
-            Toast.makeText(getApplicationContext(), "please check internet connetion!!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Please check internet connection!!!", Toast.LENGTH_SHORT).show();
         }
     }
 

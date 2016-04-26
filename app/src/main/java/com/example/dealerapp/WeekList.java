@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -34,6 +35,7 @@ public class WeekList extends Activity {
     String url, dealer_id, user_code, week;
     private List<WeekListGetSet> weeklist = new ArrayList<>();
     private WeekListAdapter adapter;
+    public SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,20 +49,25 @@ public class WeekList extends Activity {
 
         url= this.getIntent().getStringExtra("url");
 
+        preferences=getSharedPreferences(getString(R.string.prefrence), MODE_PRIVATE);
+
         DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         Calendar calendar = Calendar.getInstance();
-        calendar.setFirstDayOfWeek(Calendar.SUNDAY);
+        calendar.setFirstDayOfWeek(Calendar.MONDAY);
+
+
         int sunday=calendar.get(Calendar.DAY_OF_WEEK);
         String[] days = new String[7];
         if (sunday==Calendar.SUNDAY){
             calendar.add(Calendar.DAY_OF_MONTH,-6);
         }
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         for (int i = 0; i < 7; i++)
         {
             days[i] = format.format(calendar.getTime());
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
-        String week= days[0]+"%20To%20"+days[6];
+        week= days[0]+"%20To%20"+days[6];
 
         getWeeklist(url+dealer_id+"&week="+week);
 
@@ -69,12 +76,25 @@ public class WeekList extends Activity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if(Home.flag==0) {
                     WeekListGetSet item = weeklist.get(i);
-                    startActivity(new Intent(WeekList.this, CricketAccounts.class).putExtra("player_id", item.getPlayer_nm()));
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("player_id",item.getPlayer_id());
+                    editor.commit();
+                    startActivity(new Intent(WeekList.this, CricketAccounts.class).putExtra("player_id", item.getPlayer_id()).putExtra("week",week));
                 }
                 else if(Home.flag==1){
                     WeekListGetSet item = weeklist.get(i);
-                    startActivity(new Intent(WeekList.this, TodaysHistory.class).putExtra("player_id", item.getPlayer_nm()));
-                };
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("player_id",item.getPlayer_id());
+                    editor.commit();
+                    startActivity(new Intent(WeekList.this, TodaysHistory.class).putExtra("player_id", item.getPlayer_id()).putExtra("week", week));
+                }
+                else if(Home.flag==2){
+                    WeekListGetSet item = weeklist.get(i);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("player_id",item.getPlayer_id());
+                    editor.commit();
+                    startActivity(new Intent(WeekList.this, CombinedAccounts.class).putExtra("player_id", item.getPlayer_id()).putExtra("week", week));
+                }
 
             }
         });
@@ -112,6 +132,7 @@ public class WeekList extends Activity {
                                     JSONObject trnsaction = jsonArray.getJSONObject(i);
 
                                     item.setPlayer_nm(trnsaction.getString("user_code"));
+                                    item.setPlayer_id(trnsaction.getString("player_id"));
                                     item.setChips(trnsaction.getString("bet_amount"));
                                     if (trnsaction.getString("bet_amount").equals("null")) {
                                         item.setChips("0");

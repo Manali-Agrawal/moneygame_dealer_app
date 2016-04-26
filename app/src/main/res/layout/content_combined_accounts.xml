@@ -1,0 +1,192 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CombinedAccounts"
+    android:orientation="vertical"
+    android:background="#dedede"
+    android:weightSum="1">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.05"
+        android:weightSum="4"
+        android:orientation="horizontal"
+        android:id="@+id/topLayout">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Date"
+            android:textColor="@color/textColor"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Total Bets"
+            android:gravity="center"
+            android:textColor="@color/textColor"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Total Wins"
+            android:gravity="center"
+            android:textColor="@color/textColor"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Profit/Loss"
+            android:gravity="center"
+            android:textColor="@color/textColor"/>
+
+    </LinearLayout>
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@color/textColor"/>
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.85"
+        android:layout_below="@+id/view"
+        android:layout_above="@+id/view2"/>
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@color/textColor" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.05"
+        android:weightSum="3"
+        android:orientation="horizontal"
+        android:id="@+id/bottomLayout">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Total Bets Weekly"
+            android:textColor="@color/textColor"
+            android:id="@+id/textView12"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+
+
+        <View
+            android:layout_width="0.1dp"
+            android:layout_height="match_parent"
+            android:background="@color/textColor"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Winnings Weekly"
+            android:textColor="@color/textColor"
+            android:id="@+id/textView19"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="0.1dp"
+            android:layout_height="match_parent"
+            android:background="@color/textColor"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="P/L Weekly"
+            android:textColor="@color/textColor"
+            android:id="@+id/textView16"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+        <View
+            android:layout_width="0.1dp"
+            android:layout_height="match_parent"
+            android:background="@color/textColor"/>
+
+
+    </LinearLayout>
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@color/textColor"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.05"
+        android:weightSum="3"
+        android:orientation="horizontal"
+        android:id="@+id/bottomLayout1"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=""
+            android:textColor="@color/textColor"
+            android:id="@+id/txttotalbets"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+
+
+        <View
+            android:layout_width="0.1dp"
+            android:layout_height="match_parent"
+            android:background="@color/textColor"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=""
+            android:textColor="@color/textColor"
+            android:id="@+id/txtwinnings"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="0.1dp"
+            android:layout_height="match_parent"
+            android:background="@color/textColor"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=""
+            android:textColor="@color/textColor"
+            android:id="@+id/txtprftlos"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+        <View
+            android:layout_width="0.1dp"
+            android:layout_height="match_parent"
+            android:background="@color/textColor"/>
+
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@color/textColor"/>
+
+
+
+</LinearLayout>

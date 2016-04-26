@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DealerApp</string>
+    <string name="app_name">Moneyplay</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_login">Login</string>
 
@@ -36,10 +36,18 @@
 
     <string name="url_combined_weekly">http://46.101.6.171/moneygame/api/dealers/accountsDealerByPlayerCombinedWeekly?player_id=</string>
 
-    <string name="title_activity_home">Home</string>
+    <string name="game_wise">http://46.101.6.171/moneygame/api/cricket/accountsPlayerBygame?player_id=</string>
+
+    <string name="title_activity_home">Moneyplay</string>
     <string name="title_activity_week_list">Week List</string>
     <string name="title_activity_cricket_accounts">Cricket Accounts</string>
     <string name="title_activity_lottery_accounts">Lottery Accounts</string>
+    <string name="title_activity_lottery_history">Lottery History</string>
+    <string name="title_activity_cricket_history">Cricket History</string>
+    <string name="title_activity_cricket_transaction">Cricket Transaction</string>
+    <string name="title_activity_cricket_transaction_details">Transaction List</string>
+    <string name="title_activity_tansaction_wise_history">Transaction History</string>
     <string name="title_activity_tab_container">Players Accounts</string>
+    <string name="title_activity_combined_accounts">Combined Accounts</string>
 
 </resources>

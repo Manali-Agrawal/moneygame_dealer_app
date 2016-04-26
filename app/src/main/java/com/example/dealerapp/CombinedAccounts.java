@@ -1,14 +1,9 @@
 package com.example.dealerapp;
 
-
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,12 +22,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
-/**
- * A simple {@link Fragment} subclass.
- */
-public class CricketAccounts extends AppCompatActivity {
+public class CombinedAccounts extends AppCompatActivity {
 
     ListView listView;
     TextView total_bets, winnings, profit_loss;
@@ -57,13 +47,6 @@ public class CricketAccounts extends AppCompatActivity {
 
         getHistory();
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                HistoryGetSet item = historyList.get(i);
-                startActivity(new Intent(CricketAccounts.this, CricketHistory.class).putExtra("date", item.getDate()));
-            }
-        });
 
     }
 
@@ -75,9 +58,9 @@ public class CricketAccounts extends AppCompatActivity {
 
             try {
 
-                String url = getString(R.string.cricket_account) + player_id+"&week="+week;
+                String url = getString(R.string.url_combined_weekly) + player_id+"&week="+week;
                 Log.i("url", "" + url);
-                final ProgressDialog pDialog = new ProgressDialog(CricketAccounts.this);
+                final ProgressDialog pDialog = new ProgressDialog(CombinedAccounts.this);
                 pDialog.setMessage("Loading...");
                 pDialog.show();
                 final String TAG = "login";
@@ -108,7 +91,7 @@ public class CricketAccounts extends AppCompatActivity {
                                         rowItem.setTotal_wins(item.getString("total_wins"));
                                         rowItem.setPayout(item.getString("payout"));
                                         if(item.getString("payout").equals("null")) {
-                                           pay="0";
+                                            pay="0";
                                         }
                                         else{
                                             pay=item.getString("payout");

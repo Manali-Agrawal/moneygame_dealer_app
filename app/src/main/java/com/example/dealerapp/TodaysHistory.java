@@ -95,7 +95,7 @@ public class TodaysHistory extends AppCompatActivity {
                 days[i] = format.format(calendar.getTime());
                 calendar.add(Calendar.DAY_OF_MONTH, -1);
             }
-            String week= days[14]+"%20To%20"+days[0];
+            String week= days[14]+"To"+days[0];
             try {
 
              String url = getString(R.string.get_history_by_week) + player_id+"&week="+week;

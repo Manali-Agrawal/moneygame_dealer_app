@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -39,6 +40,9 @@ public class LastWeekList extends Activity {
     private List<WeekListGetSet> weeklist = new ArrayList<>();
     private WeekListAdapter adapter;
     public SharedPreferences preferences;
+    TextView ttlchips, ttlwins, ttlcomm;
+    int bet=0, win=0, prftlos=0;
+    String chip, wins, comm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,10 @@ public class LastWeekList extends Activity {
         user_code= getSharedPreferences(getString(R.string.prefrence), Context.MODE_PRIVATE).getString("username", "");
 
         list=(ListView) findViewById(R.id.weeklist);
+
+        ttlchips=(TextView) findViewById(R.id.txttotalbets);
+        ttlwins=(TextView) findViewById(R.id.txtwinnings);
+        ttlcomm=(TextView) findViewById(R.id.txtprftlos);
 
         url= this.getIntent().getStringExtra("url");
 
@@ -141,25 +149,37 @@ public class LastWeekList extends Activity {
                                     item.setChips(trnsaction.getString("bet_amount"));
                                     if (trnsaction.getString("bet_amount").equals("null")) {
                                         item.setChips("0");
+                                        chip="0";
                                     } else {
                                         item.setChips(trnsaction.getString("bet_amount"));
+                                        chip=trnsaction.getString("bet_amount");
                                     }
                                     if (trnsaction.getString("payout").equals("null")) {
                                         item.setWins("0");
+                                        wins="0";
                                     } else {
                                         item.setWins(trnsaction.getString("payout"));
+                                        wins=trnsaction.getString("payout");
                                     }
 
                                     if (trnsaction.getString("commission").equals("null")) {
                                         item.setComm("0");
+                                        comm="0";
                                     } else {
                                         item.setComm(trnsaction.getString("commission"));
+                                        comm=trnsaction.getString("commission");
                                     }
 
+                                    bet+= (int) Math.round(Double.parseDouble(chip));
+                                    win+= (int) Math.round(Double.parseDouble(wins));
+                                    prftlos+= (int) Math.round(Double.parseDouble(comm));
                                     weeklist.add(item);
                                 }
                                 adapter = new WeekListAdapter(getApplicationContext(), weeklist);
                                 list.setAdapter(adapter);
+                                ttlchips.setText("" + bet);
+                                ttlwins.setText(""+win);
+                                ttlcomm.setText(""+prftlos);
                             }
                             else
                             {

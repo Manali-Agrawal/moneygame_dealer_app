@@ -70,10 +70,10 @@ public class TansactionWiseHistory extends AppCompatActivity {
         mList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                HistoryGetSet item = list.get(i);
+               /* HistoryGetSet item = list.get(i);
                 transaction_id = item.getTransactionNo();
                 Log.i("url",""+getString(R.string.get_specific_transaction)+item.getTransactionNo()+ "&date="+formattedDate+"&draw_time=" + getIntent().getStringExtra("timeslot"));
-                getDetails(getString(R.string.get_specific_transaction) + item.getTransactionNo() + "&date=" + formattedDate + "&draw_time=" + getIntent().getStringExtra("timeslot"));
+                getDetails(getString(R.string.get_specific_transaction) + item.getTransactionNo() + "&date=" + formattedDate + "&draw_time=" + getIntent().getStringExtra("timeslot"));*/
             }
         });
     }

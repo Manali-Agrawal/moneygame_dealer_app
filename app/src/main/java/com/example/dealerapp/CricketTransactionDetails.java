@@ -74,10 +74,10 @@ public class CricketTransactionDetails extends AppCompatActivity {
         mList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                HistoryGetSet item = list.get(i);
+               /* HistoryGetSet item = list.get(i);
                 transaction_id = item.getTransactionNo();
                 Log.i("url", "" + getString(R.string.cricket_transaction_details) + item.getTransactionNo());
-                getDetails(getString(R.string.cricket_transaction_details) + item.getTransactionNo());
+                getDetails(getString(R.string.cricket_transaction_details) + item.getTransactionNo());*/
             }
         });
     }

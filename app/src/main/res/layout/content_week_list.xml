@@ -9,15 +9,20 @@
     android:weightSum="1"
     tools:showIn="@layout/activity_week_list" tools:context="com.example.dealerapp.WeekList">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.1"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
         android:orientation="horizontal"
         android:background="@drawable/button_border"
-
         android:paddingLeft="5dp"
-        android:paddingRight="5dp">
+        android:paddingRight="5dp"
+        android:layout_alignParentTop="true"
+        android:id="@+id/top_layout">
     <TextView
         android:layout_width="0dp"
         android:layout_weight="1.5"
@@ -62,22 +67,25 @@
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.68"
-        android:id="@+id/weeklist"></ListView>
+        android:layout_height="wrap_content"
+        android:id="@+id/weeklist"
+        android:layout_below="@+id/top_layout"
+        android:layout_above="@+id/top_view"></ListView>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.1dp"
-        android:background="@color/textColor"/>
+        android:background="@color/textColor"
+        android:id="@+id/top_view"
+        android:layout_above="@+id/bottomLayout"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.08"
+        android:layout_height="wrap_content"
         android:weightSum="3"
         android:orientation="horizontal"
-        android:id="@+id/bottomLayout">
+        android:id="@+id/bottomLayout"
+        android:layout_above="@+id/view1">
 
         <View
             android:layout_width="0.1dp"
@@ -135,16 +143,16 @@
         android:id="@+id/view1"
         android:layout_width="match_parent"
         android:layout_height="0.1dp"
+        android:layout_above="@+id/bottomLayout1"
         android:background="@color/textColor"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.04"
+        android:layout_height="wrap_content"
         android:weightSum="3"
         android:orientation="horizontal"
         android:id="@+id/bottomLayout1"
-        android:layout_alignParentBottom="true">
+        android:layout_above="@+id/view_bottom">
 
         <View
             android:layout_width="0.1dp"
@@ -201,14 +209,15 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.1dp"
-        android:background="@color/textColor"/>
+        android:background="@color/textColor"
+        android:id="@+id/view_bottom"
+        android:layout_above="@+id/card_head"/>
 
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_head"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.1"
+        android:layout_height="wrap_content"
         card_view:cardCornerRadius="4dp"
         card_view:cardElevation="2dp"
         card_view:cardUseCompatPadding="true"
@@ -216,7 +225,9 @@
         android:clickable="true"
         card_view:cardBackgroundColor="#3b5998"
         tools:ignore="NewApi"
-        >
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -227,4 +238,6 @@
             android:layout_gravity="center"
             android:gravity="center"/>
         </android.support.v7.widget.CardView>
+
+    </RelativeLayout>
 </LinearLayout>

@@ -53,7 +53,7 @@
         android:layout_width="0dp"
         android:layout_weight="0.9"
         android:layout_height="wrap_content"
-        android:text="Commission"
+        android:text="Comm."
         android:textColor="#fff"
         android:id="@+id/textcomm"
         android:layout_gravity="center"

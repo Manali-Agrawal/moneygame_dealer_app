@@ -1,10 +1,13 @@
 package com.example.dealerapp;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Home extends AppCompatActivity implements View.OnClickListener {
 
@@ -70,12 +74,40 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
                 break;
 
             case R.id.logout:
-                SharedPreferences settings = getSharedPreferences(getString(R.string.prefrence), Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = settings.edit();
-                editor.remove("logged");
-                editor.commit();
-                startActivity(new Intent(getApplicationContext(), Login.class));
-                finish();
+                ConnectivityManager connec = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                if (connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTED ||
+                        connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTING ||
+                        connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTING ||
+                        connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTED) {
+
+                    AlertDialog.Builder adb = new AlertDialog.Builder(this);
+                    adb.setTitle("Log Out");
+                    adb.setMessage("Are you sure?");
+                    adb.setIcon(android.R.drawable.ic_dialog_alert);
+
+                    adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            SharedPreferences settings = getSharedPreferences(getString(R.string.prefrence), Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = settings.edit();
+                            editor.remove("logged");
+                            editor.commit();
+                            finish();
+                            Intent i = new Intent(Home.this, Login.class);
+                            startActivity(i);
+                            Toast.makeText(Home.this, "Successfully Logged Out..", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    adb.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+
+
+                        }
+                    });
+                    adb.show();
+                }else{
+                    Toast.makeText(Home.this, "No Internet Connection!", Toast.LENGTH_SHORT).show();
+                }
+
                 break;
         }
     }
@@ -95,12 +127,39 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            SharedPreferences settings = getSharedPreferences(getString(R.string.prefrence), Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = settings.edit();
-            editor.remove("logged");
-            editor.commit();
-            startActivity(new Intent(getApplicationContext(),Login.class));
-            finish();
+            ConnectivityManager connec = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            if (connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTED ||
+                    connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTING ||
+                    connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTING ||
+                    connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTED) {
+
+                AlertDialog.Builder adb = new AlertDialog.Builder(this);
+                adb.setTitle("Log Out");
+                adb.setMessage("Are you sure?");
+                adb.setIcon(android.R.drawable.ic_dialog_alert);
+
+                adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPreferences settings = getSharedPreferences(getString(R.string.prefrence), Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = settings.edit();
+                        editor.remove("logged");
+                        editor.commit();
+                        finish();
+                        Intent i = new Intent(Home.this, Login.class);
+                        startActivity(i);
+                        Toast.makeText(Home.this, "Successfully Logged Out..", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                adb.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+
+                    }
+                });
+                adb.show();
+            }else{
+                Toast.makeText(Home.this, "No Internet Connection!", Toast.LENGTH_SHORT).show();
+            }
             return true;
         }
 

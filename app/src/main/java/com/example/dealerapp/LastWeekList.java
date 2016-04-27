@@ -40,8 +40,8 @@ public class LastWeekList extends Activity {
     private List<WeekListGetSet> weeklist = new ArrayList<>();
     private WeekListAdapter adapter;
     public SharedPreferences preferences;
-    TextView ttlchips, ttlwins, ttlcomm;
-    int bet=0, win=0, prftlos=0;
+    TextView ttlchips, ttlwins, ttlcomm, netblnc;
+    int bet=0, win=0, prftlos=0, net=0;
     String chip, wins, comm;
 
     @Override
@@ -57,6 +57,7 @@ public class LastWeekList extends Activity {
         ttlchips=(TextView) findViewById(R.id.txttotalbets);
         ttlwins=(TextView) findViewById(R.id.txtwinnings);
         ttlcomm=(TextView) findViewById(R.id.txtprftlos);
+        netblnc=(TextView) findViewById(R.id.txtnet);
 
         url= this.getIntent().getStringExtra("url");
 
@@ -175,11 +176,13 @@ public class LastWeekList extends Activity {
                                     prftlos+= (int) Math.round(Double.parseDouble(comm));
                                     weeklist.add(item);
                                 }
+                                net = bet-win-prftlos;
                                 adapter = new WeekListAdapter(getApplicationContext(), weeklist);
                                 list.setAdapter(adapter);
                                 ttlchips.setText("" + bet);
                                 ttlwins.setText(""+win);
                                 ttlcomm.setText(""+prftlos);
+                                netblnc.setText("Net Balance : "+net);
                             }
                             else
                             {

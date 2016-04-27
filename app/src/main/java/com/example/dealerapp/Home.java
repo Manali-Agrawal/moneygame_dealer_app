@@ -42,10 +42,10 @@ public class Home extends AppCompatActivity implements View.OnClickListener {
         mCombined=(CardView) findViewById(R.id.combined);
         mLogout=(CardView) findViewById(R.id.logout);
 
-        mLotteryCard.setCardBackgroundColor(Color.parseColor("#3aace2"));
-        mCricketCard.setCardBackgroundColor(Color.parseColor("#0bc3bb"));
-        mCombined.setCardBackgroundColor(Color.parseColor("#CDAF95"));
-        mLogout.setCardBackgroundColor(Color.parseColor("#8c9e90"));
+        mLotteryCard.setCardBackgroundColor(Color.parseColor("#8c9e90"));
+        mCricketCard.setCardBackgroundColor(Color.parseColor("#12132f"));
+        mCombined.setCardBackgroundColor(Color.parseColor("#710302"));
+        mLogout.setCardBackgroundColor(Color.parseColor("#CDAF95"));
 
         mLotteryCard.setOnClickListener(this);
         mCricketCard.setOnClickListener(this);

@@ -112,17 +112,25 @@ public class TodaysHistory extends AppCompatActivity {
                                     wins=wins.replace(",","");
                                     String bets= item.getString("bet_amount");
                                     bets=bets.replace(",","");
-                                    if(!wins.equals("null")) {
+                                    if(wins.equals("null")) {
+                                        wins="0";
+                                    }
                                         pl = (int) Math.round(Double.parseDouble(wins)) - (int) Math.round(Double.parseDouble(bets));
                                         rowItem.setProftlos(String.valueOf(pl));
                                         String ttlbet =item.getString("bet_amount");
                                         ttlbet = ttlbet.replace(",","");
+                                    if(ttlbet.equals("null")){
+                                        ttlbet="0";
+                                    }
                                         bet+= (int) Math.round(Double.parseDouble(ttlbet));
                                         String ttlwin =item.getString("payout");
                                         ttlwin = ttlwin.replace(",","");
+                                    if(ttlwin.equals("null")){
+                                        ttlwin="0";
+                                    }
                                         win+= (int) Math.round(Double.parseDouble(ttlwin));
                                         prftlos+= pl;
-                                    }
+//                                    }
 
                                         historyList.add(rowItem);
 

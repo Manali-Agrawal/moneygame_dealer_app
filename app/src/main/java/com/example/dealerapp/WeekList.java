@@ -110,6 +110,11 @@ public class WeekList extends Activity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
     private void getWeeklist(String url)
     {
         ConnectionDetector connectionDetector = new ConnectionDetector(getApplicationContext());
